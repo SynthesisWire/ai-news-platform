@@ -1,0 +1,12 @@
+**/bin/
+**/obj/
+node_modules/
+.next/
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+.DS_Store
+*.user
+*.suo

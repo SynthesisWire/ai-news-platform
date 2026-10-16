@@ -1,4 +1,6 @@
-# AI Research Intelligence Platform
+# SynthesisWire
+
+**Editorial Intelligence**
 
 An evidence-first, bilingual research intelligence product. The canonical record separates claims, evidence, limitations, source versions, and publication history.
 

@@ -20,13 +20,11 @@ export function Header({ locale }: { locale: Locale }) {
         <Link
           className="brand"
           href={`/${locale}`}
-          aria-label={`AI · ${t.brand}`}
+          aria-label={`${t.brand} / ${t.brandSub}`}
         >
           <BrandMark />
           <span>
-            <strong>
-              AI <span className="brand-slash">/</span> {t.brand}
-            </strong>
+            <strong>{t.brand}</strong>
             <small>{t.brandSub}</small>
           </span>
         </Link>
@@ -55,7 +53,11 @@ export function Footer({ locale }: { locale: Locale }) {
       <div className="shell footer-top">
         <div>
           <Link className="footer-brand" href={`/${locale}`}>
-            <BrandMark /> AI / {t.brand}
+            <BrandMark />
+            <span>
+              {t.brand}
+              <small>{t.brandSub}</small>
+            </span>
           </Link>
           <p>{t.footerNote}</p>
         </div>

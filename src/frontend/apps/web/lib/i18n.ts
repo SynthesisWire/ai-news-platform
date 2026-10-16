@@ -1,3 +1,5 @@
+import { brandName, brandTagline } from "./brand";
+
 export const locales = ["pt-BR", "en"] as const;
 export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = "pt-BR";
@@ -6,7 +8,7 @@ export function isLocale(value: string): value is Locale {
 }
 
 const en = {
-  brand: "Research intelligence",
+  brand: brandName,
   desk: "THE RESEARCH DESK",
   connected: "CONNECTED BY EVIDENCE",
   readingChain: "CLAIM → EVIDENCE → SOURCE",
@@ -17,7 +19,7 @@ const en = {
   recordIndex: "RECORD",
   canonicalNote:
     "Canonical claims and quoted evidence are preserved in their source language.",
-  brandSub: "An evidence-first view of AI",
+  brandSub: brandTagline,
   research: "Research feed",
   methodology: "Our approach",
   rss: "RSS feed",
@@ -109,7 +111,7 @@ const en = {
 } as const;
 
 const pt: { [K in keyof typeof en]: string } = {
-  brand: "Inteligência de pesquisa",
+  brand: brandName,
   desk: "MESA DE PESQUISA",
   connected: "CONECTADAS POR EVIDÊNCIAS",
   readingChain: "ALEGAÇÃO → EVIDÊNCIA → FONTE",
@@ -120,7 +122,7 @@ const pt: { [K in keyof typeof en]: string } = {
   recordIndex: "REGISTRO",
   canonicalNote:
     "As alegações canônicas e os trechos citados são preservados no idioma de origem.",
-  brandSub: "Uma visão de IA guiada por evidências",
+  brandSub: brandTagline,
   research: "Pesquisas",
   methodology: "Nossa abordagem",
   rss: "Feed RSS",

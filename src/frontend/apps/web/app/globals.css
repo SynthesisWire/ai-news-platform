@@ -1834,3 +1834,10 @@ li[id] {
   color: #7b8970 !important;
   margin-top: 7px;
 }
+.footer-brand small {
+  display: block;
+  font-size: 9px;
+  font-weight: 400;
+  color: var(--muted);
+  margin-top: 3px;
+}

@@ -39,12 +39,16 @@ for (const locale of ["en", "pt-BR"]) {
   assert.equal(feed.status, 200);
   const feedXml = await feed.text();
   assert.ok(feedXml.includes("<rss"));
+  assert.ok(feedXml.includes("SynthesisWire"), "RSS uses the chosen brand");
   assert.ok(feedXml.includes(`/${locale}/research/${slug}`));
 
   for (const path of [`/${locale}`, `/${locale}/research/${slug}`]) {
     const page = await get(web, path);
     assert.equal(page.status, 200, path);
-    assert.ok((await page.text()).includes(item.title), `${path} renders API title`);
+    const html = await page.text();
+    assert.ok(html.includes(item.title), `${path} renders API title`);
+    assert.ok(html.includes("SynthesisWire"), `${path} uses the chosen brand`);
+    assert.ok(html.includes("Editorial Intelligence"), `${path} includes the chosen tagline`);
   }
 }
 const sitemap = await get(web, "/sitemap.xml");

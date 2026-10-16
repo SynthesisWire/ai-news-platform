@@ -9,6 +9,16 @@ test("server-rendered locale pages expose published API records and metadata", a
     expect(index.status()).toBe(200);
     const indexHtml = await index.text();
     expect(indexHtml).toContain(`lang="${locale}"`);
+    expect(indexHtml).toContain(
+      "<title>SynthesisWire / Editorial Intelligence</title>",
+    );
+    expect(indexHtml).toContain("<strong>SynthesisWire</strong>");
+    expect(indexHtml).toContain("<small>Editorial Intelligence</small>");
+    expect(indexHtml).not.toContain("AI Research Intelligence");
+    const rss = await request.get(`/${locale}/rss.xml`);
+    expect(await rss.text()).toContain(
+      "<title>SynthesisWire / Editorial Intelligence</title>",
+    );
     expect(indexHtml).toContain("synthetic-efficient-attention");
     expect(indexHtml).toContain('type="search"');
     const detail = await request.get(
@@ -21,6 +31,7 @@ test("server-rendered locale pages expose published API records and metadata", a
     }
     expect(detailHtml).toContain('name="robots" content="noindex, follow"');
     expect(detailHtml).toContain('rel="canonical"');
+    expect(detailHtml).toContain(" · SynthesisWire</title>");
     expect(detailHtml).toContain('hrefLang="en"');
     expect(detailHtml).toContain('hrefLang="pt-BR"');
     expect(detailHtml).not.toContain("Research is temporarily unavailable");

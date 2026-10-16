@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { brandName, brandTitle } from "@/lib/brand";
 import { getResearchItems } from "@/lib/api";
 import { dictionary, isLocale } from "@/lib/i18n";
 import { languageAlternates } from "@/lib/urls";
@@ -13,7 +14,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!isLocale(locale)) return {};
   const t = dictionary(locale);
   return {
-    title: t.brand,
+    title: { absolute: brandTitle },
     description: t.heroDescription,
     alternates: {
       canonical: `/${locale}`,
@@ -21,7 +22,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       types: { "application/rss+xml": `/${locale}/rss.xml` },
     },
     openGraph: {
-      title: t.brand,
+      title: brandTitle,
+      siteName: brandName,
       description: t.heroDescription,
       url: `/${locale}`,
       locale: locale === "en" ? "en_US" : "pt_BR",

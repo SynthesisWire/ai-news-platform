@@ -60,12 +60,12 @@ export function BrandMark() {
     >
       <rect width="36" height="36" rx="10" fill="currentColor" />
       <path
-        d="M10 25V11h6a4 4 0 0 1 0 8h-6m7 0 8 6"
+        d="M23 10h-7a4 4 0 0 0 0 8h4a4 4 0 0 1 0 8h-8"
         stroke="var(--paper)"
         strokeWidth="2"
         strokeLinecap="round"
       />
-      <circle cx="25" cy="11" r="2.5" fill="var(--mint)" />
+      <circle cx="27" cy="9" r="1.5" fill="var(--mint)" />
     </svg>
   );
 }

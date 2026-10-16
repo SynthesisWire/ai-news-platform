@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { defaultLocale, isLocale } from "@/lib/i18n";
+import { brandName, brandTitle } from "@/lib/brand";
 import { siteOrigin } from "@/lib/urls";
 import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteOrigin()),
   title: {
-    default: "AI Research Intelligence",
-    template: "%s · AI Research Intelligence",
+    default: brandTitle,
+    template: `%s · ${brandName}`,
   },
   description: "AI research through claims, evidence, sources and limitations.",
 };

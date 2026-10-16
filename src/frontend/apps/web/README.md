@@ -1,6 +1,7 @@
-# Public research web
+# SynthesisWire / Editorial Intelligence
 
-A Next.js App Router public read path for the AI Research Intelligence platform.
+The Next.js App Router public web for SynthesisWire, with the chosen tagline
+Editorial Intelligence. This identity is preserved in English and Brazilian Portuguese.
 This is an executable foundation, not a production editorial or ingestion system.
 
 ## Run locally

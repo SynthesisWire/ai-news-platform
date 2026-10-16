@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { brandName } from "@/lib/brand";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getResearchItem, ResearchNotFoundError } from "@/lib/api";
@@ -39,6 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         : { index: true, follow: true },
       openGraph: {
         title: item.title,
+        siteName: brandName,
         description: item.summary,
         type: "article",
         publishedTime: item.publishedAt,

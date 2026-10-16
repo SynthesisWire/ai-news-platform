@@ -3,10 +3,10 @@
 ```text
 src/
   backend/
-    AiResearch.Api/
-    AiResearch.Domain/
-    AiResearch.Application/
-    AiResearch.Infrastructure/
+    SynthesisWire.Api/
+    SynthesisWire.Domain/
+    SynthesisWire.Application/
+    SynthesisWire.Infrastructure/
     Modules/
       Sources/
       Ingestion/
@@ -18,10 +18,10 @@ src/
       Distribution/
       Search/
   workers/
-    AiResearch.Worker.Ingestion/
-    AiResearch.Worker.Enrichment/
-    AiResearch.Worker.Publishing/
-    AiResearch.Worker.Distribution/
+    SynthesisWire.Worker.Ingestion/
+    SynthesisWire.Worker.Enrichment/
+    SynthesisWire.Worker.Publishing/
+    SynthesisWire.Worker.Distribution/
   frontend/
     apps/web/
     packages/ui/

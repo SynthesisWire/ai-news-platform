@@ -1,14 +1,63 @@
+name: ai-research
+
+# Local development only. Ports bind to loopback; do not expose this stack publicly.
 services:
   postgres:
     image: pgvector/pgvector:pg17
     environment:
       POSTGRES_USER: airesearch
-      POSTGRES_PASSWORD: airesearch
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD to a unique local secret}
       POSTGRES_DB: airesearch
     ports:
-      - "5432:5432"
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U airesearch -d airesearch"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  migrate:
+    image: ai-research-api:local
+    build:
+      context: .
+      dockerfile: src/backend/SynthesisWire.Api/Dockerfile
+    command: ["--migrate", "--seed-demo"]
+    environment:
+      ConnectionStrings__Postgres: Host=postgres;Port=5432;Database=airesearch;Username=airesearch;Password=${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD to a unique local secret}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  api:
+    image: ai-research-api:local
+    build:
+      context: .
+      dockerfile: src/backend/SynthesisWire.Api/Dockerfile
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__Postgres: Host=postgres;Port=5432;Database=airesearch;Username=airesearch;Password=${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD to a unique local secret}
+    ports:
+      - "127.0.0.1:${API_PORT:-5080}:8080"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  web:
+    build:
+      context: src/frontend/apps/web
+    environment:
+      API_BASE_URL: http://api:8080
+      SITE_URL: http://localhost:${WEB_PORT:-3000}
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+    ports:
+      - "127.0.0.1:${WEB_PORT:-3000}:3000"
+    depends_on:
+      api:
+        condition: service_started
 
 volumes:
   pgdata:

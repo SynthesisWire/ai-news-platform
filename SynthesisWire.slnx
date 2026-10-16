@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/backend/">
+    <Project Path="src/backend/SynthesisWire.Api/SynthesisWire.Api.csproj" />
+    <Project Path="src/backend/SynthesisWire.Application/SynthesisWire.Application.csproj" />
+    <Project Path="src/backend/SynthesisWire.Domain/SynthesisWire.Domain.csproj" />
+    <Project Path="src/backend/SynthesisWire.Infrastructure/SynthesisWire.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/" />
+  <Folder Name="/tests/backend/">
+    <Project Path="tests/backend/SynthesisWire.Domain.Tests/SynthesisWire.Domain.Tests.csproj" />
+    <Project Path="tests/backend/SynthesisWire.IntegrationTests/SynthesisWire.IntegrationTests.csproj" />
+  </Folder>
+</Solution>

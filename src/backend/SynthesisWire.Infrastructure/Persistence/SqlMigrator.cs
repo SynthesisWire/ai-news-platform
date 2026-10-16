@@ -79,7 +79,7 @@ public sealed class SqlMigrator(NpgsqlDataSource dataSource)
               FROM pg_constraint k JOIN pg_class c ON c.oid=k.conrelid JOIN pg_namespace n ON n.oid=c.relnamespace
               WHERE n.nspname='public' AND c.relname=ANY(@Tables)
               UNION ALL SELECT 'index:' || indexdef FROM pg_indexes WHERE schemaname='public' AND tablename=ANY(@Tables)
-              UNION ALL SELECT 'trigger:' || pg_get_triggerdef(t.oid) || ':' || t.tgenabled
+              UNION ALL SELECT 'trigger:' || pg_get_triggerdef(t.oid) || ':' || t.tgenabled::text
               FROM pg_trigger t JOIN pg_class c ON c.oid=t.tgrelid JOIN pg_namespace n ON n.oid=c.relnamespace
               WHERE n.nspname='public' AND c.relname=ANY(@Tables) AND NOT t.tgisinternal
               UNION ALL SELECT 'function:' || pg_get_functiondef(p.oid) FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace

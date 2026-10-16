@@ -66,8 +66,8 @@ jobs:
         run: |
           dotnet run --project src/backend/SynthesisWire.Api --configuration Release --no-build -- --urls http://127.0.0.1:5080 > /tmp/api.log 2>&1 &
           (cd src/frontend/apps/web && npm start -- --hostname 127.0.0.1) > /tmp/web.log 2>&1 &
-          curl --fail --retry 30 --retry-connrefused --retry-delay 2 http://127.0.0.1:5080/health/ready
-          curl --fail --retry 30 --retry-connrefused --retry-delay 2 http://127.0.0.1:3000/en
+          curl --fail --retry 30 --retry-all-errors --retry-delay 2 http://127.0.0.1:5080/health/ready
+          curl --fail --retry 30 --retry-all-errors --retry-delay 2 http://127.0.0.1:3000/en
       - run: node scripts/smoke.mjs
       - name: Browser verification
         working-directory: src/frontend/apps/web
@@ -110,8 +110,8 @@ jobs:
         run: |
           docker compose config --quiet
           docker compose up --detach --build
-          curl --fail --retry 60 --retry-connrefused --retry-delay 2 http://127.0.0.1:5080/health/ready
-          curl --fail --retry 60 --retry-connrefused --retry-delay 2 http://127.0.0.1:3000/en
+          curl --fail --retry 60 --retry-all-errors --retry-delay 2 http://127.0.0.1:5080/health/ready
+          curl --fail --retry 60 --retry-all-errors --retry-delay 2 http://127.0.0.1:3000/en
       - run: node scripts/smoke.mjs
       - name: Container logs
         if: failure()

@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/backend/">
+    <Project Path="src/backend/AiResearch.Api/AiResearch.Api.csproj" />
+    <Project Path="src/backend/AiResearch.Application/AiResearch.Application.csproj" />
+    <Project Path="src/backend/AiResearch.Domain/AiResearch.Domain.csproj" />
+    <Project Path="src/backend/AiResearch.Infrastructure/AiResearch.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/" />
+  <Folder Name="/tests/backend/">
+    <Project Path="tests/backend/AiResearch.Domain.Tests/AiResearch.Domain.Tests.csproj" />
+    <Project Path="tests/backend/AiResearch.IntegrationTests/AiResearch.IntegrationTests.csproj" />
+  </Folder>
+</Solution>

@@ -18,25 +18,9 @@ jobs:
     name: API, database, and bilingual web
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    services:
-      postgres:
-        image: pgvector/pgvector:pg17
-        env:
-          POSTGRES_USER: airesearch
-          POSTGRES_PASSWORD: ci-test-only
-          POSTGRES_DB: airesearch
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U airesearch -d airesearch"
-          --health-interval 5s
-          --health-timeout 5s
-          --health-retries 20
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
       NEXT_TELEMETRY_DISABLED: 1
-      ConnectionStrings__Postgres: Host=localhost;Port=5432;Database=airesearch;Username=airesearch;Password=ci-test-only
-      TEST_POSTGRES_CONNECTION_STRING: Host=localhost;Port=5432;Database=airesearch;Username=airesearch;Password=ci-test-only
       API_BASE_URL: http://127.0.0.1:5080
       SITE_URL: http://127.0.0.1:3000
       E2E_BASE_URL: http://127.0.0.1:3000
@@ -52,7 +36,14 @@ jobs:
           node-version: 24
           cache: npm
           cache-dependency-path: src/frontend/apps/web/package-lock.json
+      - name: Verify credential policy
+        run: node --test scripts/credential-policy.test.mjs && node scripts/check-credentials.mjs
+      - name: Generate ephemeral test credentials
+        run: node scripts/ci-secrets.mjs
+      - name: Start disposable PostgreSQL
+        run: docker compose up --detach --wait --wait-timeout 120 postgres
       - run: dotnet restore
+      - run: dotnet format whitespace --verify-no-changes --no-restore
       - run: dotnet build --no-restore --configuration Release
       - run: dotnet test --no-build --configuration Release --logger trx --results-directory TestResults
       - name: Install web dependencies
@@ -61,17 +52,19 @@ jobs:
       - name: Verify web
         working-directory: src/frontend/apps/web
         run: |
+          npm run lint
+          npm run format:check
           npm run typecheck
           npm test
           npm run build
           npx playwright install --with-deps chromium
       - name: Verify repeated initialization
         run: |
-          dotnet run --project src/backend/AiResearch.Api --configuration Release --no-build -- --migrate --seed-demo
-          dotnet run --project src/backend/AiResearch.Api --configuration Release --no-build -- --migrate --seed-demo
+          dotnet run --project src/backend/SynthesisWire.Api --configuration Release --no-build -- --migrate --seed-demo
+          dotnet run --project src/backend/SynthesisWire.Api --configuration Release --no-build -- --migrate --seed-demo
       - name: Start live stack
         run: |
-          dotnet run --project src/backend/AiResearch.Api --configuration Release --no-build -- --urls http://127.0.0.1:5080 > /tmp/api.log 2>&1 &
+          dotnet run --project src/backend/SynthesisWire.Api --configuration Release --no-build -- --urls http://127.0.0.1:5080 > /tmp/api.log 2>&1 &
           (cd src/frontend/apps/web && npm start -- --hostname 127.0.0.1) > /tmp/web.log 2>&1 &
           curl --fail --retry 30 --retry-connrefused --retry-delay 2 http://127.0.0.1:5080/health/ready
           curl --fail --retry 30 --retry-connrefused --retry-delay 2 http://127.0.0.1:3000/en
@@ -95,6 +88,10 @@ jobs:
             src/frontend/apps/web/test-results
           if-no-files-found: ignore
 
+      - name: Clean up disposable database
+        if: always()
+        run: docker compose down --volumes
+
   containers:
     name: Docker Compose smoke
     runs-on: ubuntu-latest
@@ -107,6 +104,8 @@ jobs:
         with:
           node-version: 24
           package-manager-cache: false
+      - name: Generate ephemeral test credentials
+        run: node scripts/ci-secrets.mjs
       - name: Build and start containers
         run: |
           docker compose config --quiet

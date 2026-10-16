@@ -6,20 +6,22 @@ An evidence-first, bilingual research intelligence product. The canonical record
 
 ## Executable foundation
 
-This repository now contains a .NET 10 API, EF Core/PostgreSQL schema, and a Next.js/React/TypeScript website in `en` and `pt-BR`.
+This repository now contains a .NET 10 API, Dapper/Npgsql/PostgreSQL schema, and a Next.js/React/TypeScript website in `en` and `pt-BR`.
 
 The development dataset is **entirely synthetic**. It is labeled in the API and UI, cites reserved `example.org` URLs, and must not be presented as real research or news. No private Notion content, external AI provider, or cloud account is required.
 
 ### Start locally with Docker
 
-Prerequisite: Docker with Compose v2.
+Prerequisites: Docker with Compose v2 and Node.js 24 for the optional local secret-generation command.
 
 ```sh
 cp .env.example .env
+# Supply POSTGRES_PASSWORD from your secret manager, or generate one for this shell:
+export POSTGRES_PASSWORD="$(node -e 'process.stdout.write(require("node:crypto").randomBytes(32).toString("hex"))')"
 docker compose up --build
 ```
 
-Compose waits for PostgreSQL, applies versioned migrations, seeds the demo idempotently, then starts the API and website. All published ports bind to loopback.
+Compose waits for PostgreSQL, applies versioned migrations, seeds the demo idempotently, then starts the API and website. All published ports bind to loopback. Compose requires a nonempty password and has no default. Keep actual secrets in the environment or ignored `.env`, never in tracked files. Reuse the same secret while keeping an existing database volume; generating a different one does not change an initialized database password.
 
 - Website: <http://localhost:3000/pt-BR> or <http://localhost:3000/en>
 - API: <http://localhost:5080/api/research-items?locale=en>
@@ -38,13 +40,13 @@ Install the .NET 10 SDK and Node.js 24 LTS, then start only PostgreSQL:
 
 ```sh
 docker compose up -d postgres
-export ConnectionStrings__Postgres='Host=localhost;Port=5432;Database=airesearch;Username=airesearch;Password=local-development-only'
+export ConnectionStrings__Postgres="Host=localhost;Port=5432;Database=airesearch;Username=airesearch;Password=${POSTGRES_PASSWORD:?Supply your local database secret}"
 dotnet restore
-dotnet run --project src/backend/AiResearch.Api -- --migrate --seed-demo
-dotnet run --project src/backend/AiResearch.Api -- --urls http://localhost:5080
+dotnet run --project src/backend/SynthesisWire.Api -- --migrate --seed-demo
+dotnet run --project src/backend/SynthesisWire.Api -- --urls http://localhost:5080
 ```
 
-Use the password selected in `.env` when constructing the connection string. The API does not load `.env` automatically, and normal API startup never applies migrations or adds demo content.
+Keep `POSTGRES_PASSWORD` set in this shell, or load the secret from your secret manager. If you chose to store it in the ignored `.env`, export it privately before running host tools. The empty example is not usable as a password. The API does not load `.env` automatically, and normal API startup never applies migrations or adds demo content.
 
 In a second terminal:
 

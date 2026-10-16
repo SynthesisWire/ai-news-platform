@@ -1,3 +1,4 @@
+import { randomBytes } from "node:crypto";
 import { describe, it, expect } from "vitest";
 import {
   parseResearchList,
@@ -44,7 +45,10 @@ describe("publication contract", () => {
   it("rejects dangerous protocols and credential-bearing source links", () => {
     expect(safeSourceUrl("javascript:alert(1)")).toBeNull();
     expect(safeSourceUrl("data:text/html,hello")).toBeNull();
-    expect(safeSourceUrl("https://user:password@example.org")).toBeNull();
+    const credentialUrl = new URL("https://example.org");
+    credentialUrl.username = "user";
+    credentialUrl.password = randomBytes(32).toString("hex");
+    expect(safeSourceUrl(credentialUrl.href)).toBeNull();
     expect(safeSourceUrl("https://example.org/paper")).toBe(
       "https://example.org/paper",
     );

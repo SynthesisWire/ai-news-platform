@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../SynthesisWire.Application/SynthesisWire.Application.csproj" />
+    <PackageReference Include="Dapper" Version="2.1.89" />
+    <PackageReference Include="Npgsql" Version="10.0.3" />
+    <EmbeddedResource Include="Persistence/SqlMigrations/*.sql" />
+  </ItemGroup>
+</Project>

@@ -6,7 +6,7 @@ services:
     image: pgvector/pgvector:pg17
     environment:
       POSTGRES_USER: airesearch
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-local-development-only}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD to a unique local secret}
       POSTGRES_DB: airesearch
     ports:
       - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
@@ -22,10 +22,10 @@ services:
     image: ai-research-api:local
     build:
       context: .
-      dockerfile: src/backend/AiResearch.Api/Dockerfile
+      dockerfile: src/backend/SynthesisWire.Api/Dockerfile
     command: ["--migrate", "--seed-demo"]
     environment:
-      ConnectionStrings__Postgres: Host=postgres;Port=5432;Database=airesearch;Username=airesearch;Password=${POSTGRES_PASSWORD:-local-development-only}
+      ConnectionStrings__Postgres: Host=postgres;Port=5432;Database=airesearch;Username=airesearch;Password=${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD to a unique local secret}
     depends_on:
       postgres:
         condition: service_healthy
@@ -35,10 +35,10 @@ services:
     image: ai-research-api:local
     build:
       context: .
-      dockerfile: src/backend/AiResearch.Api/Dockerfile
+      dockerfile: src/backend/SynthesisWire.Api/Dockerfile
     environment:
       ASPNETCORE_URLS: http://+:8080
-      ConnectionStrings__Postgres: Host=postgres;Port=5432;Database=airesearch;Username=airesearch;Password=${POSTGRES_PASSWORD:-local-development-only}
+      ConnectionStrings__Postgres: Host=postgres;Port=5432;Database=airesearch;Username=airesearch;Password=${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD to a unique local secret}
     ports:
       - "127.0.0.1:${API_PORT:-5080}:8080"
     depends_on:

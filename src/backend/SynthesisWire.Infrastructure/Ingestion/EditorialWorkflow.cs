@@ -126,7 +126,7 @@ public sealed class EditorialWorkflow(NpgsqlDataSource dataSource, ResearchStore
             capture.IsSynthetic ? EvidenceStrength.Synthetic : EvidenceStrength.Limited, capture.IsSynthetic, [], DateTimeOffset.UtcNow);
         foreach (var claim in draft.Claims)
             item.AddClaim(claim.Statement, capture.IsSynthetic ? ClaimType.SyntheticIllustration : ClaimType.AuthorClaim, Confidence.Low,
-                new Evidence(source, capture.IsSynthetic ? EvidenceKind.SyntheticFixture : EvidenceKind.Paper, claim.Excerpt, claim.Locator));
+                new Evidence(source, capture.IsSynthetic ? EvidenceKind.SyntheticFixture : EvidenceKind.WebSource, claim.Excerpt, claim.Locator));
         item.SetLocalization("en", draft.English.Title, draft.English.Summary, draft.English.WhyItMatters, draft.English.Limitations);
         item.SetLocalization("pt-BR", draft.Portuguese.Title, draft.Portuguese.Summary, draft.Portuguese.WhyItMatters, draft.Portuguese.Limitations);
         item.SubmitForReview();

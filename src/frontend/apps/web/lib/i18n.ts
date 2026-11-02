@@ -98,7 +98,7 @@ const en = {
   bilingualText:
     "English and Brazilian Portuguese share the same canonical claims, citations and publication versions.",
   footerNote: "Context before conclusions. Evidence before certainty.",
-  status: "Public preview · Synthetic demo data",
+  status: "Local editorial preview",
   unavailable: "Research is temporarily unavailable",
   unavailableNote:
     "We couldn’t reach the research service. Please try again in a moment.",
@@ -202,7 +202,7 @@ const pt: { [K in keyof typeof en]: string } = {
   bilingualText:
     "Inglês e português brasileiro compartilham as mesmas alegações canônicas, citações e versões publicadas.",
   footerNote: "Contexto antes de conclusões. Evidências antes de certezas.",
-  status: "Prévia pública · Dados sintéticos de demonstração",
+  status: "Prévia editorial local",
   unavailable: "As pesquisas estão temporariamente indisponíveis",
   unavailableNote:
     "Não foi possível acessar o serviço de pesquisa. Tente novamente em instantes.",
@@ -226,6 +226,7 @@ export function localizedDate(value: string, locale: Locale): string {
 }
 
 const terms: Record<string, [string, string]> = {
+  websource: ["Web source", "Fonte web"],
   limited: ["Limited", "Limitada"],
   modelrelease: ["Model release", "Lançamento de modelo"],
   syntheticillustration: ["Synthetic illustration", "Ilustração sintética"],

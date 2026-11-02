@@ -1,11 +1,17 @@
 import { describe, expect, it } from "vitest";
-import { dictionary, locales } from "../lib/i18n";
+import { dictionary, locales, term } from "../lib/i18n";
 import { renderRss } from "../lib/feed";
 import { brandName, brandTagline, brandTitle } from "../lib/brand";
 import { generateMetadata } from "../app/[locale]/page";
 import { metadata } from "../app/layout";
 
 describe("SynthesisWire identity", () => {
+  it("labels general web evidence accurately without classifying every record as synthetic", () => {
+    expect(term("web-source", "en")).toBe("Web source");
+    expect(term("web-source", "pt-BR")).toBe("Fonte web");
+    expect(dictionary("en").status).toBe("Local editorial preview");
+    expect(dictionary("pt-BR").status).toBe("Prévia editorial local");
+  });
   it("retains the exact chosen brand and tagline in both locales", () => {
     expect(brandName).toBe("SynthesisWire");
     expect(brandTagline).toBe("Editorial Intelligence");

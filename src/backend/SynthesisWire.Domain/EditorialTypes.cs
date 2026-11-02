@@ -5,7 +5,7 @@ public enum ResearchItemType { ResearchPaper, ModelRelease, ResearchNote }
 public enum EvidenceStrength { Limited, Moderate, Strong, Synthetic }
 public enum ClaimType { AuthorClaim, IndependentFinding, SyntheticIllustration }
 public enum Confidence { Low, Medium, High }
-public enum EvidenceKind { Paper, VendorReport, IndependentReplication, SyntheticFixture }
+public enum EvidenceKind { Paper, VendorReport, IndependentReplication, SyntheticFixture, WebSource }
 
 public sealed class EditorialRuleException(string message) : InvalidOperationException(message);
 

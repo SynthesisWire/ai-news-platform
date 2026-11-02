@@ -75,6 +75,10 @@ jobs:
       - name: Isolated outage and retry verification
         working-directory: src/frontend/apps/web
         run: env -u E2E_BASE_URL npm run test:e2e
+      - name: Editorial CLI to live bilingual publication
+        env:
+          SYNTHESISWIRE_EDITORIAL_E2E: "true"
+        run: node scripts/editorial-e2e.mjs
       - name: Service logs
         if: failure()
         run: cat /tmp/api.log /tmp/web.log 2>/dev/null || true

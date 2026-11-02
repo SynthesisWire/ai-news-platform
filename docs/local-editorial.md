@@ -81,6 +81,8 @@ Security references: [OWASP SSRF prevention](https://cheatsheetseries.owasp.org/
 
 CI exercises deterministic synthetic HTTP responses, dangerous URL/address/redirect cases, time/size/media limits, real PostgreSQL capture/review/publication concurrency, immutable capture/audit records, evidence/rights rejection and unchanged public contracts. Existing real API/Next smoke, RSS, browser and outage/retry suites verify the public projections. No public site is deployed by CI.
 
+After the browser suites, `scripts/editorial-e2e.mjs` verifies a newly published item through the actual CLI and running PostgreSQL/API/Next stack. A separate test-only executable prepares a synthetic capture/draft using an injected in-memory fetcher; it is not shipped with the API and adds no production fetch bypass. The script invokes the supported `--editorial` command for show/save/submit/review/publish/retry, checks that premature publication and unconfirmed review fail, verifies draft privacy before publication, then checks the new canonical item, both localized pages and both RSS feeds. The network-capture step remains separately tested; this test does not fetch or publish third-party material. It requires explicit CI opt-in and the same disposable test database as the live stack. The test runs last so its additional synthetic publication cannot change earlier fixture-order assumptions.
+
 An optional real-network test captures only the public example.org example document, retains it in memory for the test and never publishes or writes a database record:
 
 ```sh

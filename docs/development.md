@@ -4,7 +4,7 @@
 
 `docker compose up --build` starts PostgreSQL 17 with pgvector, a one-shot migration/demo-seed job, the public API, and the website. The demo job is explicitly invoked only by this local-development Compose file. API startup itself never changes the schema or seeds data.
 
-Supply a unique development database secret via `POSTGRES_PASSWORD` in the environment or ignored `.env`; no committed default is provided. See the README for a runtime generation command. Keep the same secret for the lifetime of the local database volume. Compose binds ports to `127.0.0.1`; do not use this file as an internet-facing deployment. There are no credentials for Azure, AI providers, Notion, or any other external service.
+Supply a unique development database secret via `POSTGRES_PASSWORD` in the environment or ignored `.env`; no committed default is provided. See the README for a runtime generation command. Keep the same secret for the lifetime of the local database volume. Compose binds ports to `127.0.0.1`; do not use this file as an internet-facing deployment. No credentials for external services are included.
 
 Database readiness and application liveness are separate:
 
@@ -76,9 +76,9 @@ Implemented in this foundation:
 
 Not implemented yet:
 
-- Manual URL fetching, SSRF-hardened ingestion, raw object-storage snapshots, or material-change deduplication
+- Object-storage snapshots, general crawler/connectors, and semantic/material-change classification beyond whitespace-normalized duplicate hints
 - Live AI extraction/translation or a provider gateway
-- Authenticated editorial UI/API, review permissions, or Notion import/sync
+- Hosted authenticated editorial UI/API and multi-user review permissions
 - Outbox relay, Azure Service Bus, consumers, retries, or dead-letter processing
 - Keyword/semantic search endpoints or generated embeddings
 - Live news, daily briefs, trend/relationship views, or social/newsletter delivery
@@ -86,7 +86,7 @@ Not implemented yet:
 
 Source documents in the fixture represent canonical provenance, not fetched source snapshots. Reserved `example.org` links deliberately do not establish real evidence. The outbox is persisted groundwork; it does not imply successful event delivery.
 
-The [first end-to-end slice](architecture/12-first-end-to-end-slice.md) and [roadmap](product/roadmap.md) remain open beyond this increment. Add real ingestion and a human-gated editorial path next, with explicit authority and SSRF/content isolation before enabling any external fetches or publication.
+The [first end-to-end slice](architecture/12-first-end-to-end-slice.md) and [roadmap](product/roadmap.md) remain open beyond this increment. The local ingestion and human-gated editorial increment is documented in [local editorial operations](local-editorial.md); hosted identity, operations and broader ingestion remain separate decisions.
 
 ## Credential policy
 

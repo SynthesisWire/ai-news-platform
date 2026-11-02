@@ -24,7 +24,6 @@ flowchart TB
 
     subgraph External
       SRC[External Sources]
-      NOTION[Notion]
       MODELS[AI Providers\nOpenAI · Anthropic · Google · Local]
       SOCIAL[X / Email / other channels]
     end
@@ -35,7 +34,6 @@ flowchart TB
     API --> BLOB
     API --> SB
     SRC --> ING
-    NOTION <--> ING
     ING --> PG
     ING --> BLOB
     ING --> SB

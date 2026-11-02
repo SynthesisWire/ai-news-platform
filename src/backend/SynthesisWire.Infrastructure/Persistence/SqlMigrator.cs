@@ -8,7 +8,7 @@ namespace SynthesisWire.Infrastructure.Persistence;
 public sealed class SqlMigrator(NpgsqlDataSource dataSource)
 {
     private const long LockId = 7306102027;
-    private static readonly string[] Tables = ["research_items", "source_documents", "claims", "evidence", "localizations", "publication_versions", "outbox_messages", "research_embeddings"];
+    private static readonly string[] Tables = ["research_items", "source_documents", "claims", "evidence", "localizations", "publication_versions", "outbox_messages", "research_embeddings", "source_captures", "editorial_drafts", "editorial_events"];
     public static IReadOnlyList<SqlMigration> Migrations { get; } = LoadMigrations();
 
     public async Task MigrateAsync(CancellationToken cancellationToken = default)

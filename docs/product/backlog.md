@@ -12,14 +12,13 @@
 ## Epic B — Source & Ingestion
 
 1. Source registry and source trust policy.
-2. Manual URL ingestion endpoint.
+2. Manual URL ingestion via the implemented local administrative CLI; authenticated hosted access is a later decision.
 3. HTTP fetcher with canonical URL normalization.
-4. Immutable snapshot persistence in object storage.
+4. Immutable bounded snapshots in PostgreSQL (implemented locally); object storage is a future scale decision.
 5. Exact/hash duplicate detection.
 6. Material-change detection between source versions.
 7. RSS/Atom connector.
 8. arXiv / Crossref / company research connector strategy.
-9. Notion AI Research Hub import adapter.
 
 ## Epic C — Knowledge Core
 
@@ -48,7 +47,6 @@
 
 1. Draft/review/approve/reject/correct workflow.
 2. Editorial UI adapter API.
-3. Notion sync for candidates and review status.
 4. Evidence review screen.
 5. Publication preview.
 6. Audit history.

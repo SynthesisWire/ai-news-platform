@@ -8,7 +8,6 @@ An evidence-first, bilingual research intelligence product. The canonical record
 
 This repository now contains a .NET 10 API, Dapper/Npgsql/PostgreSQL schema, and a Next.js/React/TypeScript website in `en` and `pt-BR`.
 
-The development dataset is **entirely synthetic**. It is labeled in the API and UI, cites reserved `example.org` URLs, and must not be presented as real research or news. No private Notion content, external AI provider, or cloud account is required.
 
 ### Start locally with Docker
 
@@ -67,7 +66,6 @@ See [development and verification](docs/development.md) for tests, schema change
 - Locale renderings share canonical IDs and evidence rather than creating separate research records.
 - A modular monolith keeps domain rules independent of web and persistence concerns.
 - Publication writes and outbox records share a transaction. External delivery is a later increment.
-- Notion is an editorial adapter, never the public runtime database.
 - The website is canonical; feeds and future distribution are projections of published versions.
 
 The complete product architecture remains the target. This first executable foundation does **not** claim to implement the complete [URL-to-publication slice](docs/architecture/12-first-end-to-end-slice.md).

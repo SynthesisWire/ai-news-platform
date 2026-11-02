@@ -54,7 +54,7 @@ uses a non-root Node 24 runtime; its build context is this directory. Provide
 
 Production content is fetched exclusively from the API. Test fixtures live under
 `tests/` and are never used as an application fallback. This frontend has no
-Notion access, editorial writes, paid integrations or private data.
+editorial HTTP writes, paid integrations or private snapshot data.
 
 ## Verification
 

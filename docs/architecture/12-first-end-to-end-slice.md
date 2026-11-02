@@ -1,27 +1,16 @@
-# 12 — First End-to-End Slice
+# 12 - First End-to-End Slice
 
-Build one thin but complete path before broad ingestion.
+Implemented scope: local administrative commands, not a hosted publishing operation.
 
 ```mermaid
 flowchart LR
- URL[Manual URL] --> Fetch[Fetch + snapshot]
- Fetch --> Dedup[Deduplicate]
- Dedup --> Extract[AI structured extraction]
- Extract --> Review[Editorial review]
- Review --> Canon[Canonical Research Item]
- Canon --> Localize[PT/EN render]
- Localize --> Publish[Publish web page]
- Publish --> RSS[RSS/Atom]
+ URL[Allowed public HTTPS URL] --> Fetch[Bounded capture with pinned public IP]
+ Fetch --> Snapshot[Immutable private snapshot and provenance]
+ Snapshot --> Dedup[Exact dedup / material-match hint]
+ Dedup --> Draft[Human-authored structured PT-BR and EN draft]
+ Draft --> Review[Explicit human review of current revision]
+ Review --> Canon[Canonical item and atomic outbox]
+ Canon --> Web[Existing bilingual web and RSS]
 ```
 
-## Acceptance criteria
-
-1. Submit a source URL manually.
-2. Persist immutable source snapshot and metadata.
-3. Detect exact/material duplicates.
-4. Produce typed Claim/Evidence/Concept output through a provider-independent model gateway.
-5. Review/edit/approve without changing the source snapshot.
-6. Publish one canonical Research Item in PT-BR and English.
-7. Generate canonical URL, sitemap entry and RSS entry.
-8. Record every publication version/correction.
-9. Re-running any step is idempotent.
+Acceptance evidence and commands are in [local editorial operations](../local-editorial.md). Source bytes are never served by the public API. The operator supplies all claims, source metadata, localized text, limitations and reuse-rights confirmation. No AI provider or automatic translation is used. Exact URL/content retries are idempotent; whitespace-normalized cross-URL matches are review hints, not automatic semantic merges. Publication requires a separate explicit review transition and publishes both locales atomically. Published corrections continue to use immutable publication versions; post-publication editorial correction commands are outside this first local slice.

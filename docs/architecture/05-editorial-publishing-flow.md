@@ -18,7 +18,7 @@ stateDiagram-v2
 
 ```mermaid
 sequenceDiagram
-    participant N as Notion/Admin UI
+    participant N as Local editorial CLI / future authenticated UI
     participant API as Editorial API
     participant DB as PostgreSQL
     participant Q as Service Bus

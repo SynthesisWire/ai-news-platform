@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../../../src/backend/SynthesisWire.Domain/SynthesisWire.Domain.csproj" />
+    <ProjectReference Include="../../../src/backend/SynthesisWire.Application/SynthesisWire.Application.csproj" />
+  </ItemGroup>
+</Project>

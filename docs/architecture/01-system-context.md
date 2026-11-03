@@ -3,7 +3,6 @@
 ```mermaid
 flowchart LR
     Sources[External Sources\nPapers · Blogs · News · APIs · RSS · GitHub] --> Platform[AI Research Intelligence Platform]
-    Notion[Existing Notion Research Hub] <--> Platform
     Editors[Editors / Researchers] --> Platform
     Platform --> Web[Public Website]
     Platform --> RSS[RSS / Atom]
@@ -19,4 +18,5 @@ flowchart LR
 
 The platform owns canonical content, claims, evidence, topics, relationships, translations, publication status, and version history.
 
-Notion remains a supported editorial input surface during migration, but it is not queried by the public website at request time.
+
+Editorial input is owned by the platform. The current local increment uses OS/database-authorized CLI commands; a hosted identity/authorization design is required before enabling editorial HTTP writes.

@@ -7,7 +7,6 @@
 - Deduplication + canonicalization.
 - Evidence/claim extraction pipeline.
 - Editorial status workflow.
-- Notion import/sync adapter for the existing AI Research Hub.
 - Public read API.
 
 ## Phase 1 — Public MVP
@@ -44,3 +43,7 @@
 - Public/partner API.
 - Premium research workspaces.
 - Organization-specific private research overlays.
+
+## Current vertical increment (November 2026)
+
+Implemented: explicit-host HTTPS capture with SSRF protections, immutable private snapshots, exact deduplication and material-match review hints, manual structured bilingual drafts, revision-bound human review and atomic publication into existing web/RSS projections. No AI extraction or translation provider runs in this increment. See [local editorial operations](../local-editorial.md).
